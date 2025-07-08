@@ -3,70 +3,107 @@
 <head>
   <title>Evaluación Tabla Periódica</title>
   <style>
-    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
-    .question { display: none; margin-top: 20px; }
-    .result { display: none; }
+    body { font-family: Arial; padding: 20px; max-width: 700px; margin: auto; }
+    .question, .result { display: none; margin-top: 20px; }
+    .btn { margin: 5px 0; display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+    th { background: #f0f0f0; }
   </style>
 </head>
 <body>
 
-<h2>Evaluación Diagnóstica: Tabla Periódica</h2>
+<h2>🧪 Evaluación Diagnóstica: Tabla Periódica</h2>
 <div id="intro">
-  <p>“Hola, vamos a conocer qué tanto dominas sobre la tabla periódica. Con tus respuestas, diseñaremos una ruta personalizada para ti.” </p>
   <p>Responde algunas preguntas para identificar qué partes de la tabla periódica necesitas reforzar.</p>
   <button onclick="startTest()">Comenzar Evaluación</button>
 </div>
 
 <div id="q1" class="question">
   <p><strong>Pregunta 1:</strong> ¿Qué representa el número atómico?</p>
-  <button onclick="answer('q1', true)">Cantidad de protones</button><br>
-  <button onclick="answer('q1', false)">Cantidad de neutrones</button><br>
-  <button onclick="answer('q1', false)">Número de electrones de valencia</button>
+  <button class="btn" onclick="answer('q1', 'Estructura general', true)">Cantidad de protones</button>
+  <button class="btn" onclick="answer('q1', 'Estructura general', false)">Cantidad de neutrones</button>
+  <button class="btn" onclick="answer('q1', 'Estructura general', false)">Electrones de valencia</button>
 </div>
 
 <div id="q2" class="question">
   <p><strong>Pregunta 2:</strong> ¿Cuál de estos es un gas noble?</p>
-  <button onclick="answer('q2', true)">Neón</button><br>
-  <button onclick="answer('q2', false)">Sodio</button><br>
-  <button onclick="answer('q2', false)">Aluminio</button>
+  <button class="btn" onclick="answer('q2', 'Gases nobles', true)">Neón</button>
+  <button class="btn" onclick="answer('q2', 'Gases nobles', false)">Sodio</button>
+  <button class="btn" onclick="answer('q2', 'Gases nobles', false)">Aluminio</button>
 </div>
 
 <div id="results" class="result">
-  <h3>Resultados:</h3>
-  <p id="resultText"></p>
-  <button onclick="alert('Aquí se mostraría tu ruta de aprendizaje personalizada')">Ver ruta de aprendizaje</button>
+  <h3>📊 Mapa de Aprendizaje Personalizado</h3>
+  <table id="resultTable">
+    <tr>
+      <th>Subtema</th>
+      <th>Estado</th>
+      <th>Recomendación</th>
+    </tr>
+  </table>
+
+  <h3>🧭 Ruta de aprendizaje sugerida:</h3>
+  <ul id="learningPath"></ul>
+
+  <button onclick="restart()">🔁 Reiniciar evaluación</button>
 </div>
 
 <script>
   let current = 0;
-  let results = {
-    'Estructura general': null,
-    'Gases nobles': null
-  };
+  let results = {};
 
   function startTest() {
     document.getElementById('intro').style.display = 'none';
     document.getElementById('q1').style.display = 'block';
   }
 
-  function answer(questionId, isCorrect) {
+  function answer(questionId, topic, isCorrect) {
+    results[topic] = isCorrect ? '✅' : (results[topic] === '❌' ? '❌' : '🔶');
+
     document.getElementById(questionId).style.display = 'none';
+
     if (questionId === 'q1') {
-      results['Estructura general'] = isCorrect ? '✅' : '❌';
       document.getElementById('q2').style.display = 'block';
-    } else if (questionId === 'q2') {
-      results['Gases nobles'] = isCorrect ? '✅' : '❌';
+    } else {
       showResults();
     }
   }
 
   function showResults() {
     document.getElementById('results').style.display = 'block';
-    let text = "";
+
+    let table = document.getElementById('resultTable');
+    let pathList = document.getElementById('learningPath');
+    pathList.innerHTML = "";
+
     for (let topic in results) {
-      text += `${topic}: ${results[topic]}<br>`;
+      let state = results[topic];
+      let recommendation = "";
+
+      if (state === '✅') {
+        recommendation = "Puedes omitir este módulo";
+      } else if (state === '🔶') {
+        recommendation = "Repasa brevemente y haz ejercicios";
+        addToPath(topic);
+      } else if (state === '❌') {
+        recommendation = "Estudia el módulo completo";
+        addToPath(topic);
+      }
+
+      let row = table.insertRow();
+      row.innerHTML = `<td>${topic}</td><td>${state}</td><td>${recommendation}</td>`;
     }
-    document.getElementById('resultText').innerHTML = text;
+
+    function addToPath(topic) {
+      let li = document.createElement("li");
+      li.textContent = topic;
+      pathList.appendChild(li);
+    }
+  }
+
+  function restart() {
+    location.reload();
   }
 </script>
 
