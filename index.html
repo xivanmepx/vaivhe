@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Evaluación Tabla Periódica</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
+    .question { display: none; margin-top: 20px; }
+    .result { display: none; }
+  </style>
+</head>
+<body>
+
+<h2>Evaluación Diagnóstica: Tabla Periódica</h2>
+<div id="intro">
+  <p>Responde algunas preguntas para identificar qué partes de la tabla periódica necesitas reforzar.</p>
+  <button onclick="startTest()">Comenzar Evaluación</button>
+</div>
+
+<div id="q1" class="question">
+  <p><strong>Pregunta 1:</strong> ¿Qué representa el número atómico?</p>
+  <button onclick="answer('q1', true)">Cantidad de protones</button><br>
+  <button onclick="answer('q1', false)">Cantidad de neutrones</button><br>
+  <button onclick="answer('q1', false)">Número de electrones de valencia</button>
+</div>
+
+<div id="q2" class="question">
+  <p><strong>Pregunta 2:</strong> ¿Cuál de estos es un gas noble?</p>
+  <button onclick="answer('q2', true)">Neón</button><br>
+  <button onclick="answer('q2', false)">Sodio</button><br>
+  <button onclick="answer('q2', false)">Aluminio</button>
+</div>
+
+<div id="results" class="result">
+  <h3>Resultados:</h3>
+  <p id="resultText"></p>
+  <button onclick="alert('Aquí se mostraría tu ruta de aprendizaje personalizada')">Ver ruta de aprendizaje</button>
+</div>
+
+<script>
+  let current = 0;
+  let results = {
+    'Estructura general': null,
+    'Gases nobles': null
+  };
+
+  function startTest() {
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('q1').style.display = 'block';
+  }
+
+  function answer(questionId, isCorrect) {
+    document.getElementById(questionId).style.display = 'none';
+    if (questionId === 'q1') {
+      results['Estructura general'] = isCorrect ? '✅' : '❌';
+      document.getElementById('q2').style.display = 'block';
+    } else if (questionId === 'q2') {
+      results['Gases nobles'] = isCorrect ? '✅' : '❌';
+      showResults();
+    }
+  }
+
+  function showResults() {
+    document.getElementById('results').style.display = 'block';
+    let text = "";
+    for (let topic in results) {
+      text += `${topic}: ${results[topic]}<br>`;
+    }
+    document.getElementById('resultText').innerHTML = text;
+  }
+</script>
+
+</body>
+</html>
