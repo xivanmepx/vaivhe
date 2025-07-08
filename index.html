@@ -3,7 +3,7 @@
 <head>
   <title>Evaluación Tabla Periódica</title>
   <style>
-    body { font-family: Arial; padding: 20px; max-width: 700px; margin: auto; }
+    body { font-family: Arial; padding: 20px; max-width: 800px; margin: auto; }
     .question, .result { display: none; margin-top: 20px; }
     .btn { margin: 5px 0; display: block; }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -19,20 +19,39 @@
   <button onclick="startTest()">Comenzar Evaluación</button>
 </div>
 
+<!-- Pregunta 1 -->
 <div id="q1" class="question">
-  <p><strong>Pregunta 1:</strong> ¿Qué representa el número atómico?</p>
+  <p><strong>1. ¿Qué representa el número atómico?</strong></p>
   <button class="btn" onclick="answer('q1', 'Estructura general', true)">Cantidad de protones</button>
   <button class="btn" onclick="answer('q1', 'Estructura general', false)">Cantidad de neutrones</button>
   <button class="btn" onclick="answer('q1', 'Estructura general', false)">Electrones de valencia</button>
 </div>
 
+<!-- Pregunta 2 -->
 <div id="q2" class="question">
-  <p><strong>Pregunta 2:</strong> ¿Cuál de estos es un gas noble?</p>
+  <p><strong>2. ¿Cuál de estos es un gas noble?</strong></p>
   <button class="btn" onclick="answer('q2', 'Gases nobles', true)">Neón</button>
   <button class="btn" onclick="answer('q2', 'Gases nobles', false)">Sodio</button>
   <button class="btn" onclick="answer('q2', 'Gases nobles', false)">Aluminio</button>
 </div>
 
+<!-- Pregunta 3 -->
+<div id="q3" class="question">
+  <p><strong>3. ¿Cuál de estos es un metaloide?</strong></p>
+  <button class="btn" onclick="answer('q3', 'Tipos de elementos', true)">Silicio</button>
+  <button class="btn" onclick="answer('q3', 'Tipos de elementos', false)">Hierro</button>
+  <button class="btn" onclick="answer('q3', 'Tipos de elementos', false)">Oxígeno</button>
+</div>
+
+<!-- Pregunta 4 -->
+<div id="q4" class="question">
+  <p><strong>4. ¿Qué propiedad periódica disminuye de izquierda a derecha en un periodo?</strong></p>
+  <button class="btn" onclick="answer('q4', 'Propiedades periódicas', true)">Radio atómico</button>
+  <button class="btn" onclick="answer('q4', 'Propiedades periódicas', false)">Electronegatividad</button>
+  <button class="btn" onclick="answer('q4', 'Propiedades periódicas', false)">Energía de ionización</button>
+</div>
+
+<!-- Resultados -->
 <div id="results" class="result">
   <h3>📊 Mapa de Aprendizaje Personalizado</h3>
   <table id="resultTable">
@@ -50,21 +69,30 @@
 </div>
 
 <script>
-  let current = 0;
+  let questions = ['q1', 'q2', 'q3', 'q4'];
+  let currentIndex = 0;
   let results = {};
 
   function startTest() {
     document.getElementById('intro').style.display = 'none';
-    document.getElementById('q1').style.display = 'block';
+    document.getElementById(questions[currentIndex]).style.display = 'block';
   }
 
   function answer(questionId, topic, isCorrect) {
-    results[topic] = isCorrect ? '✅' : (results[topic] === '❌' ? '❌' : '🔶');
-
     document.getElementById(questionId).style.display = 'none';
 
-    if (questionId === 'q1') {
-      document.getElementById('q2').style.display = 'block';
+    // Guardar resultado
+    if (isCorrect) {
+      results[topic] = '✅';
+    } else {
+      // Si ya estaba en error, mantener ❌
+      results[topic] = results[topic] === '❌' ? '❌' : '🔶';
+    }
+
+    // Mostrar siguiente pregunta o resultados
+    currentIndex++;
+    if (currentIndex < questions.length) {
+      document.getElementById(questions[currentIndex]).style.display = 'block';
     } else {
       showResults();
     }
