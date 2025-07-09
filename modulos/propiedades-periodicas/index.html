@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Módulo: Propiedades Periódicas</title>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: auto; padding: 20px; }
+    h2, h3 { color: #1f5aa1; }
+    iframe { width: 100%; height: 315px; margin-bottom: 20px; }
+    .quiz button { margin: 5px 0; display: block; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+
+<h2>🧪 Módulo: Propiedades Periódicas</h2>
+
+<h3>🎓 Introducción:</h3>
+<p>Las propiedades periódicas son características de los elementos químicos que varían de forma predecible a lo largo de la tabla periódica. Entre ellas están: el radio atómico, la electronegatividad, la energía de ionización y la afinidad electrónica.</p>
+
+<h3>📺 Video sugerido:</h3>
+<iframe src="https://www.youtube.com/embed/fGoXjOGIbtI" frameborder="0" allowfullscreen></iframe>
+
+<h3>📘 Infografía:</h3>
+<p><em>(Puedes reemplazar esta imagen por una mejor)</em></p>
+<img src="https://www.lifeder.com/wp-content/uploads/2019/04/propiedades-periodicas-tabla.jpg" alt="Infografía propiedades periódicas" width="100%" />
+
+<h3>🎯 Mini-quiz:</h3>
+<div class="quiz">
+  <p><strong>1. ¿Qué propiedad disminuye de izquierda a derecha en un periodo?</strong></p>
+  <button onclick="check(this, true)">Radio atómico</button>
+  <button onclick="check(this, false)">Electronegatividad</button>
+  <button onclick="check(this, false)">Energía de ionización</button>
+
+  <p><strong>2. ¿Qué propiedad aumenta hacia la derecha y arriba?</strong></p>
+  <button onclick="check(this, false)">Radio atómico</button>
+  <button onclick="check(this, true)">Electronegatividad</button>
+  <button onclick="check(this, false)">Masa atómica</button>
+
+  <p><strong>3. ¿Cuál de estos elementos tiene mayor energía de ionización?</strong></p>
+  <button onclick="check(this, false)">Sodio (Na)</button>
+  <button onclick="check(this, true)">Flúor (F)</button>
+  <button onclick="check(this, false)">Potasio (K)</button>
+</div>
+
+<h3>⭐ Desafío práctico:</h3>
+<p>Busca 3 elementos en la tabla periódica y determina cómo varía su electronegatividad y radio atómico. ¿Qué patrón encuentras?</p>
+
+<script>
+function check(btn, correct) {
+  if (btn.disabled) return;
+  btn.disabled = true;
+  btn.style.fontWeight = "bold";
+  if (correct) {
+    btn.classList.add("correct");
+    btn.innerHTML += " ✅ ¡Correcto!";
+  } else {
+    btn.classList.add("incorrect");
+    btn.innerHTML += " ❌";
+  }
+}
+</script>
+
+</body>
+</html>
